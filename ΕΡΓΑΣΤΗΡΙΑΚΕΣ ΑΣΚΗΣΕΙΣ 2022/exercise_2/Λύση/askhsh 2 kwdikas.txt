@@ -1,0 +1,80 @@
+
+%ASKHSH 2
+%ERWTHMA 0 (AKOUSMA - texnikh MF)
+
+clear;clc;close;
+load chirp;  
+%sound(y,Fs)
+%sound(y,4500) %pio argo pio varu klimakwsh me a>1 sugkekrimena me a = 1.82
+%sound(y,16000) %pio grhgoro pio "psilo" klimakwsh me a < 1 sugkrimena me a =0.512 
+
+%-----------------------------
+%ERWTHMA1 
+clear; close; clc;
+load chirp;                     
+y0=y;
+noise=0.5*randn(size(y));
+y = y0 + noise;       
+
+b = firls(34,[0 .45 .5 1],[0 0 1 1]); 
+
+f_output = filtfilt(b,1,y);      
+figure;
+plot(y0(1:100),'green');
+title('Αρχικό σήμα 0-100');
+
+figure;
+plot(y0(end-100:end),'green' );
+title('Αρχικό σήμα N-100 - N');
+
+figure;
+plot(f_output(1:100),'magenta');
+title('Σήμα με φίλτρο 0-100');
+
+figure;
+plot(f_output(end-100:end),'magenta' );
+title('Σήμα με φίλτρο N-100 - N');
+%-----------------------------
+%ERWTHMA 2  
+
+close all;
+figure; 
+plot(y0(1:100),'green'); 
+title('Αρχικό σήμα');
+figure; 
+plot(y(1:100),'red'); 
+title('Σήμα με θόρυβο');
+
+b1 = fir1(34,0.48,'high',chebwin(35,30)); 
+ 
+b2 = firls(34,[0 .45 .5 1],[0 0 1 1]);   
+ 
+b3 = firpm(34,[0 .45 .5 1],[0 0 1 1]);
+
+f_output1 = filtfilt(b1,1,y);       
+figure;
+plot(f_output1(1:100),'cyan'); 
+set(gca,'Color','k')
+title('Φιλτραρισμένο σήμα (ΦΟΥΡΙΕΡ)');
+
+f_output2 = filtfilt(b2,1,y);       
+figure;
+plot(f_output2(1:100),'yellow');
+set(gca,'Color','k')
+title('Φιλτραρισμένο σήμα (Dont''Care)');
+
+f_output3 = filtfilt(b3,1,y);       
+figure;
+plot(f_output3(1:100),'black');
+
+title('Φιλτραρισμένο σήμα (Μin-Max)');
+
+ 
+%-----------------------------
+%ERWTHMA 3
+
+MSEFOURRIER=mean((y0-f_output1).^2)
+
+MSEDONTCARE=mean((y0-f_output2).^2)
+
+MSEMINMAX =mean((y0-f_output3).^2)

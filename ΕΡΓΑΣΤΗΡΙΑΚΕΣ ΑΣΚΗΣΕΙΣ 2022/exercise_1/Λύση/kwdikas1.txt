@@ -1,0 +1,208 @@
+Askhsh 1
+
+
+---------------------a--------------------------
+
+matlab :
+
+
+f0=5;
+initial_phase=0;
+Ts=0.02;
+n  = 0:10/Ts;
+x = sin(2*pi*f0*n*Ts+initial_phase);
+figure; plot(Ts*n,x);
+hold on
+Ts=0.05;
+n  = 0:10/Ts;
+x = sin(2*pi*f0*n*Ts+initial_phase);
+plot(Ts*n,x);
+Ts=0.1;
+n  = 0:10/Ts;
+x = sin(2*pi*f0*n*Ts+initial_phase);
+plot(Ts*n,x);
+legend('Ts=0.02','Ts=0.05','Ts=0.1');
+
+---------------------a--------------------------
+
+
+
+---------------------b--------------------------
+
+sampling_reconstruction(0.02,5,0)
+sampling_reconstruction(0.05,5,0)
+sampling_reconstruction(0.1,5,0)
+
+
+
+--------------------b-----------------------------
+
+
+
+-------------------------c------------------------
+
+
+f0=5;
+initial_phase=pi/4;
+Ts=0.1;
+n  = 0:10/Ts;
+x = sin(2*pi*f0*n*Ts+initial_phase);
+figure; plot(Ts*n,x);
+
+sampling_reconstruction(0.1,5,pi/4)
+
+
+
+
+-------------------------c------------------------
+
+
+
+
+
+--------------------------D----------------------
+Ts=0.005;
+n=0:10/Ts;
+f0=4;
+x=sin(2*pi*f0*n*Ts);
+figure; plot(n(20:40),x(20:40));
+title('f0=4Hz');
+f0=204;
+x=sin(2*pi*f0*n*Ts);
+figure; plot(n(20:40),x(20:40));
+title('f0=204Hz');
+f0=4004;
+x=sin(2*pi*f0*n*Ts);
+figure; plot(n(20:40),x(20:40));
+title('f0=4004Hz');
+
+
+--------------------------D----------------------
+
+
+ASKHSH 2
+
+
+---------------------a--------------------------
+
+
+
+-----------------------a-------------------------------
+
+H(e^jω )=1-cos(ω)
+
+
+-----------------------a-------------------------------
+
+
+
+-----------------------b-------------------------------
+
+h = [-1/2, 1, -1/2];
+[H, W] = freqz(h,1, 1000); 
+figure; plot(W,unwrap(angle(H)),'magenta')
+figure; plot(W,abs(H),'green')
+
+
+
+-----------------------b-------------------------------
+
+
+
+----------------------c------------------------------
+
+
+boostarei upshles suxnothtes (w>=1,5)
+nerfarei xamhles suxnothtes  (w<=1.5)
+diplasiazei polu upshles (w>=3)
+
+***High pass filter***
+----------------------c------------------------------
+
+
+
+
+----------------------d---------------------------
+
+Conv  {
+ h = [-1/2, 1, -1/2];
+n= 0:16000;
+x= cos((pi/4)*n)-sin((pi/2)*n)+(-1/2).^n;
+y= conv(h,x); 
+plot(x(1:100),"Black");
+hold on
+plot(y(1:100),"magenta");
+legend('Έίσοδος', 'Έξοδος');
+title('Έξοδος conv()')
+}
+
+
+FILTER  {
+h = [-1/2, 1, -1/2];
+n= 0:16000;
+x= cos((pi/4)*n)-sin((pi/2)*n)+(-1/2).^n;
+y= filter(h,1,x); 
+plot(x(1:100),"Black");
+hold on
+plot(y(1:100),"magenta");
+legend('Έίσοδος', 'Έξοδος');
+title('Έξοδος filter()')
+
+}
+
+
+
+----------------------d---------------------------
+
+
+----------------------e---------------------------
+
+n= 0:16000;
+x= cos((pi/4)*n)-sin((pi/2)*n)+(-1/2).^n;
+k=abs(fftshift(fft(x)));
+figure;
+plot(linspace(-pi,pi,size(k,2)),k);
+title('abs(fftshift(fft(x))) ')
+
+n= 0:16000;
+x= cos((pi/4)*n)-sin((pi/2)*n)+(-1/2).^n;
+h = [-1/2, 1, -1/2];
+y= filter(h,1,x);
+g=abs(fftshift(fft(y)));
+figure;
+plot(linspace(-pi,pi,size(g,2)), g);
+title('abs(fftshift(fft(y))) ')
+
+----------------------e---------------------------
+
+----------------------F---------------------------
+
+
+clc;
+clear all;
+close all;
+
+K=input('Length of sequence 2^ dwse dunamh  ');
+N= 2^K ;
+
+
+y=[ones(1,N)];  %ena shma mono assous   %Βαζω N-1 gia DFT  . an to afhsw N einai gia Fast Fourier
+
+
+length(y);
+
+epanalhpseis=10000;
+
+tStart=tic;
+for i = 1:epanalhpseis
+ 
+ x=fft(y);
+ 
+ 
+end
+
+tEnd = toc(tStart)
+
+
+
+----------------------F---------------------------

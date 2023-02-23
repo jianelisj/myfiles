@@ -1,0 +1,41 @@
+
+%ASKHSH 3
+%ERWTHMA 1 MH TO AKOUSEIS POTE . PONOKEFALOS
+
+clear;clc;close;
+load Noisy;                     
+%sound(yw,Fs); %pote 3ana me epiase hmikrania
+
+
+%------------------------------------------
+%------------------------------------------
+%------------------------------------------
+
+%ERWTHMA 2 
+NumFFT=4096;
+Freqs = linspace(-1,1,NumFFT);
+p=plot(Freqs,abs(fftshift(fft(yw,NumFFT))),'m-*',"MarkerSize",4,"MarkerEdgeColor","black","MarkerFaceColor","black")
+%------------------------------------------
+%------------------------------------------
+%------------------------------------------
+
+%ERWTHMA 3
+
+hc = fir1(31, 0.21,'low');
+f_output = filtfilt(hc,1,yw);
+noise=yw-f_output;
+%------------------------------------------
+%------------------------------------------
+%------------------------------------------
+
+%ERWTHMA 4
+plot(Freqs,abs(fftshift(fft(noise,NumFFT))),'m-*',"MarkerSize",4,"MarkerEdgeColor","black","MarkerFaceColor","black")
+meanNoise=mean(noise)
+stdNoise=std(noise)
+%------------------------------------------
+%------------------------------------------
+%------------------------------------------
+
+
+%ERWTHMA 5
+plot(noise(32:282),"magenta");

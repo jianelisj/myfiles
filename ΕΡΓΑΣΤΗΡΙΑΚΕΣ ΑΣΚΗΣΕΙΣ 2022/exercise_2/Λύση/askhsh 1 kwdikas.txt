@@ -1,0 +1,95 @@
+%ASKHSH 1
+
+% Xamhloperato fourrier
+
+clc; clear all ; close all;
+N = 31;
+fc = 0.48;
+ 
+hc = fir1(N - 1, fc,'low');
+ 
+NumFFT = 4096;
+Freqs = linspace(-1,1,NumFFT);
+ 
+figure
+plot(Freqs,20*log10(abs(fftshift(fft(hc,NumFFT)))),"magenta")
+
+title('χαμηλοπερατό φίλτρο με σειρά Fourier ')
+grid on
+%--------------------------------------------
+% Upsiperato fourrier
+close all; clear; clc
+ 
+N = 31;
+fc = 0.48;
+ 
+hc = fir1(N - 1, fc,'high');
+ 
+NumFFT = 4096;
+Freqs = linspace(-1,1,NumFFT);
+ 
+figure
+plot(Freqs,20*log10(abs(fftshift(fft(hc,NumFFT)))),"red")
+ 
+title('υψιπερατό φίλτρο με σειρά Fourier ')
+grid on
+%--------------------------------------------
+% Xamhloperato Dont care
+
+close all; clear; clc
+ 
+h_lp=firls(30,[0 .2 .3 1],[1 1 0 0]);
+
+NumFFT = 8192;
+Freqs = linspace(-1,1,NumFFT);
+ 
+figure
+plot(Freqs,20*log10(abs(fftshift(fft(h_lp,NumFFT)))),"magenta");
+title('χαμηλοπερατό φίλτρο Don''t care')
+grid on;
+%--------------------------------------------
+
+% Upsiperato Dont care
+
+close all; clear; clc
+ 
+h_hp=firls(30,[0 .2 .3 1],[0 0 1 1]);
+ 
+NumFFT = 8192;
+Freqs = linspace(-1,1,NumFFT);
+ 
+figure
+plot(Freqs,20*log10(abs(fftshift(fft(h_hp,NumFFT)))),'red');
+title('υψηπερατό φίλτρο Don''t care')
+grid on;
+
+%--------------------------------------------
+% Xamhloperato Min-max
+
+close all; clear; clc
+ 
+h_lp=firpm(30,[0 .2 .3 1],[1 1 0 0]);
+
+NumFFT = 8192;
+Freqs = linspace(-1,1,NumFFT);
+ 
+figure
+plot(Freqs,20*log10(abs(fftshift(fft(h_lp,NumFFT)))),'magenta');
+title('χαμηλοπερατό φίλτρο Min-Max')
+grid on;
+%--------------------------------------------
+% Upsiperato Min-max
+
+
+close all; clear; clc
+ 
+h_hp=firpm(30,[0 .2 .3 1],[0 0 1 1]);
+ 
+NumFFT = 8192;
+Freqs = linspace(-1,1,NumFFT);
+ 
+figure
+plot(Freqs,20*log10(abs(fftshift(fft(h_hp,NumFFT)))),'red');
+title('υψηπερατό φίλτρο Min-Max')
+grid on;
+%--------------------------------------------
